@@ -297,7 +297,7 @@
       <div class="feature-list">
         <div class="feature-item">
           <div class="feature-item-label">Forecast</div>
-          <div class="feature-item-text">Monthly Soll vs. Ist comparison per team member — actual hours, planned hours, attainment %, and cost. Future months show planned capacity from the forecast.</div>
+          <div class="feature-item-text">Monthly planned vs. actual comparison per team member — actual hours, planned hours, attainment %, and cost. Future months show planned capacity from the forecast.</div>
         </div>
         <div class="feature-item">
           <div class="feature-item-label">Current Sprint</div>
@@ -379,7 +379,7 @@
       </p>
 
       <p>
-        A manually maintained Excel workbook for the same reporting would involve Power Query for the timesheet connection, M code that breaks whenever column names shift, pivot tables that need to be rebuilt whenever someone asks for a new view, and VBA for anything dynamic — burndown charts, rolling month comparisons, Soll/Ist calculations. It works. But it's brittle, hard to hand off, and requires real Excel programming expertise to maintain. Anyone who's inherited one of these workbooks knows the feeling.
+        A manually maintained Excel workbook for the same reporting would involve Power Query for the timesheet connection, M code that breaks whenever column names shift, pivot tables that need to be rebuilt whenever someone asks for a new view, and VBA for anything dynamic — burndown charts, rolling month comparisons, planned vs. actual calculations. It works. But it's brittle, hard to hand off, and requires real Excel programming expertise to maintain. Anyone who's inherited one of these workbooks knows the feeling.
       </p>
 
       <div class="callout">
@@ -388,7 +388,7 @@
       </div>
 
       <p>
-        The features that would have been impractical in Excel — a dynamic multi-month Soll/Ist table with progress bars, a Confluence sync check as part of the update workflow, a live burndown that updates from the Jira API — were straightforward when I could describe what I wanted and iterate quickly with an AI that understood both the data and the HTML it needed to generate.
+        The features that would have been impractical in Excel — a dynamic multi-month planned vs. actual table with progress bars, a Confluence sync check as part of the update workflow, a live burndown that updates from the Jira API — were straightforward when I could describe what I wanted and iterate quickly with an AI that understood both the data and the HTML it needed to generate.
       </p>
 
       <h2>What I actually learned</h2>
@@ -402,7 +402,7 @@
       </p>
 
       <p>
-        The dashboard is now being adapted as a reusable template for other project teams in the company. The architecture is deliberately generic — team roster, sprint schedule, forecast values are all parameterized. Adapting it to a new project means updating configuration, not rebuilding anything. Every team gets the same quality of real-time visibility, without needing a BI specialist or a developer who knows Excel automation.
+        After other project managers saw the dashboard, the interest was immediate. The next step is to standardise it — to figure out what the common denominator looks like across projects that are all, in some ways, different. Every project has its own team structure, sprint cadence, and reporting needs. That's actually the interesting design challenge here: not just making it configurable, but finding the underlying pattern that holds across all of them. The goal is something that can be rolled out without rebuilding anything — just updating parameters — while still feeling like it was made for that project.
       </p>
 
       <div class="ornament">· · ·</div>
