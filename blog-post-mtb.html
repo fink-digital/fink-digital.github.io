@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My first enduro race — Thomas Fink</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1714;
+      --paper: #f5f0e8;
+      --paper-warm: #ede7d6;
+      --accent: #c8401a;
+      --muted: #7a7268;
+      --border: #d4cec2;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    .masthead {
+      border-bottom: 2px solid var(--ink);
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .masthead-home {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--ink);
+      padding: 0.9rem 0;
+    }
+    .masthead-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .article-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 2rem);
+    }
+
+    .article-kicker {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .article-kicker::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 6vw, 3.6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    h1 em { font-style: italic; color: var(--accent); }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    .article-meta-author { font-size: 0.85rem; font-weight: 500; }
+    .article-meta-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+    .article-meta-read {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    .article-body p {
+      font-size: clamp(1rem, 1.5vw, 1.1rem);
+      line-height: 1.85;
+      margin-bottom: 1.75rem;
+    }
+
+    .article-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin: 3.5rem 0 1.25rem;
+    }
+    .article-body h2 em { font-style: italic; color: var(--accent); }
+    .article-body strong { font-weight: 500; }
+
+    .pull-quote {
+      border-left: 3px solid var(--accent);
+      padding: 1rem 0 1rem 1.75rem;
+      margin: 2.5rem 0;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .callout {
+      background: var(--paper-warm);
+      border: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0;
+    }
+    .callout-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .callout p {
+      font-size: 0.95rem !important;
+      margin-bottom: 0 !important;
+      line-height: 1.7 !important;
+    }
+
+    /* IMAGE PLACEHOLDER */
+    .img-placeholder {
+      background: var(--paper-warm);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+      aspect-ratio: 16/9;
+      width: 100%;
+      margin: 2rem 0;
+    }
+
+    .ornament {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--border);
+      letter-spacing: 0.5em;
+      margin: 3rem 0;
+    }
+
+    .article-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.75rem;
+      color: var(--muted);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      margin-top: 3rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+
+    footer {
+      border-top: 2px solid var(--ink);
+      padding: 2rem clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4rem;
+    }
+    .footer-name { font-family: 'Playfair Display', serif; font-weight: 900; letter-spacing: -0.02em; }
+    .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; }
+  </style>
+</head>
+<body>
+
+  <header class="masthead">
+    <a class="masthead-home" href="index.html">Thomas Fink</a>
+    <span class="masthead-label">Writing</span>
+  </header>
+
+  <article class="article-wrap">
+
+    <div class="article-kicker">Personal · Mountainbike · Racing</div>
+
+    <h1>I entered my first enduro race. It was <em>humbling</em>. I loved every second.</h1>
+
+    <div class="article-meta">
+      <span class="article-meta-author">Thomas Fink</span>
+      <span class="article-meta-date">October 2025</span>
+      <span class="article-meta-read">4 min read</span>
+    </div>
+
+    <div class="article-body">
+
+      <p>
+        For as long as I've been riding mountain bikes, one thing has been quietly on my list: race one. Not to win. Not to podium. Just to line up, pin a number, and find out what actually happens when you ride trails under pressure, surrounded by people who take this seriously.
+      </p>
+
+      <p>
+        This year I finally did it. The event was Trail Partie — organised by Lines Magazine Austria, held at the Brucker Hochanger in Bruck an der Mur. Four stages over a weekend, officially classified as a "fun race where timing just happens to exist." That framing is generous. The people who showed up were fast.
+      </p>
+
+      <h2>How the weekend worked</h2>
+      <div style="margin: 2.5rem 0;">
+        <img src="20251005_TP3_T2_2_Stage1_083.jpg" alt="Thomas Fink — Trail Partie Stage 1" style="width:100%; display:block; border:1px solid var(--border);">
+        <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--muted); margin-top:0.5rem;">Stage 1 · Trail Partie, Brucker Hochanger · Photo: <a href="https://www.instagram.com/xm0lexphotox/" target="_blank" style="color:var(--muted);">@xm0lexphotox</a></div>
+      </div>
+
+
+      <p>
+        Saturday was for getting acquainted. You could ride the stages solo or with others, figure out your lines, walk the technical sections, decide where to push and where to stay conservative. It's a format that rewards preparation — the riders who had their lines dialled on Sunday clearly spent Saturday doing the work.
+      </p>
+
+      <p>
+        Sunday morning arrived cold and drizzly. Not ideal, but the trails held up surprisingly well. There's something about racing in slightly grim weather that concentrates the mind. You stop overthinking and just ride.
+      </p>
+
+      <p>
+        Four timed stages on the Hochanger. Every metre of descent had to be earned first — no lifts, no shuttles, just pedalling up under your own power and then racing down. In total, around 800 vertical metres across the day — not a sufferfest by any measure, but enough to find out exactly where your fitness stands.
+      </p>
+
+      <p>
+        I should be honest about my preparation: it wasn't exactly structured. Two small kids, a full-time job, and a bike that gets out when life allows. I showed up having ridden when I could, not when I planned to. That's the reality for a lot of people, and it's worth saying out loud rather than pretending otherwise.
+      </p>
+
+      <p>
+        Here's something that happens when you mostly ride alone or with the same group of friends: your sense of your own level quietly drifts upward. There's no external reference point. You get better, your friends get better, everyone gets better together, and somewhere along the way you start to assume you're reasonably competent on a bike.
+      </p>
+
+      <p>
+        A race fixes that very quickly.
+      </p>
+
+      <p>
+        I finished somewhere in the back third of my category. Not last — I want to be clear about that — but not close to the front either. And the gap to the faster riders wasn't marginal. The competition was genuinely strong, in a way that was both sobering and, honestly, motivating.
+      </p>
+
+      <div class="pull-quote">
+        "When you're tired, everything you know about technique starts to leave. You don't lose it all at once — it just quietly drains away, corner by corner."
+      </div>
+
+      <p>
+        What I noticed most clearly was what fatigue does to technique. Early in the day, I was riding the way I know I can — braking before the corner, carrying speed through, exiting with momentum. By the later stages, the wheels had come off. I was braking in corners, losing speed exactly where I should have been gaining it, and then grinding back up to pace in the straights. Every mistake costs more energy than the mistake itself. It compounds.
+      </p>
+
+      <p>
+        That's not new information — any cyclist will tell you fitness and technique are inseparable. But there's a difference between knowing it and feeling it play out across four stages on a cold Sunday morning.
+      </p>
+
+      <h2>What I learned about <em>where I actually am</em></h2>
+
+      <p>
+        The most useful thing the race gave me was specificity. Not just "I need to get better," but <em>where</em> exactly, and by how much.
+      </p>
+
+      <p>
+        Technical terrain? Acceptable. Rocky, rooty, awkward-line sections — I held my own there. But the flow sections — the smooth, fast, pumpy stretches where good riders string together rhythm and momentum — that's where I was losing time. Not because I was crashing or making big errors. Just because I wasn't flowing. I was riding segments instead of reading the trail as one continuous thing.
+      </p>
+
+      <div class="callout">
+        <div class="callout-label">The training shift that followed</div>
+        <p>In the weeks after the race, I deliberately stopped seeking out technical challenges and spent almost all my riding time on flow trails. Not because they're more fun — though they are — but because that's where the biggest gap was. Knowing where your leverage is changes how you spend your time.</p>
+      </div>
+
+      <p>
+        That's the kind of feedback you can only get from racing. Training rides and group rides tell you a lot, but they don't tell you that. A stopwatch and a field of other riders do.
+      </p>
+
+      <h2>The part that had nothing to do with performance</h2>
+
+      <p>
+        I want to say something about the people, because it would be wrong to leave it out.
+      </p>
+
+      <p>
+        Trail Partie is a community event at its core. The "fun race where timing just happens" framing is genuine — there's a warmth to it that you don't always find in competitive formats. I met people I'd never crossed paths with before, had conversations on the lifts and at the stage starts that I'm still thinking about, and spent a weekend around people who love this sport in the same unreasonable way I do.
+      </p>
+
+      <p>
+        That matters. The result matters less than I thought it would. The experience — two days in the Styrian mountains, four stages, one cold and rainy race morning, and a field full of people who just genuinely wanted to ride good trails — that's what I'll carry.
+      </p>
+
+      <p>
+        I'll be back. That much I know.
+      </p>
+
+      
+      <div style="margin: 2.5rem 0;">
+        <img src="20251005_TP3_T2_3_Stage3_134.jpg" alt="Thomas Fink — Trail Partie Stage 3" style="width:100%; display:block; border:1px solid var(--border);">
+        <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--muted); margin-top:0.5rem;">Stage 3 · Trail Partie, Brucker Hochanger · Photo: <a href="https://www.instagram.com/xm0lexphotox/" target="_blank" style="color:var(--muted);">@xm0lexphotox</a></div>
+      </div>
+<div class="ornament">· · ·</div>
+
+      <p style="color: var(--muted); font-size: 0.95rem;">
+        <em>Trail Partie is organised by Lines Magazine Austria. If you're a mountain biker in the DACH region and haven't heard of it — look it up. It's a good one.</em>
+      </p>
+
+    </div>
+
+    <div class="article-tags">
+      <span class="tag">Mountainbike</span>
+      <span class="tag">Enduro</span>
+      <span class="tag">Trail Partie</span>
+      <span class="tag">Bruck an der Mur</span>
+      <span class="tag">Personal</span>
+      <span class="tag">Racing</span>
+    </div>
+
+    <a class="back-link" href="index.html">← Back to all writing</a>
+
+  </article>
+
+  <footer>
+    <div class="footer-name">Thomas Fink</div>
+    <div class="footer-copy">© 2026 · Graz, Austria · Design & Product Strategy</div>
+  </footer>
+
+</body>
+</html>

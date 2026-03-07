@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Two small AI projects that taught me more than any tutorial — Thomas Fink</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1714;
+      --paper: #f5f0e8;
+      --paper-warm: #ede7d6;
+      --accent: #c8401a;
+      --muted: #7a7268;
+      --border: #d4cec2;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    .masthead {
+      border-bottom: 2px solid var(--ink);
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .masthead-home {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--ink);
+      padding: 0.9rem 0;
+    }
+    .masthead-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .article-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 2rem);
+    }
+
+    .article-kicker {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .article-kicker::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 6vw, 3.6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    h1 em { font-style: italic; color: var(--accent); }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    .article-meta-author { font-size: 0.85rem; font-weight: 500; }
+    .article-meta-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+    .article-meta-read {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    .article-body p {
+      font-size: clamp(1rem, 1.5vw, 1.1rem);
+      line-height: 1.85;
+      margin-bottom: 1.75rem;
+    }
+
+    .article-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin: 3.5rem 0 1.25rem;
+    }
+    .article-body h2 em { font-style: italic; color: var(--accent); }
+    .article-body strong { font-weight: 500; }
+
+    /* PROJECT HEADER CARD */
+    .project-header {
+      border: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0 2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      background: var(--paper-warm);
+    }
+    .project-header-icon {
+      font-size: 2rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .project-header-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+    }
+    .project-header-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.4rem;
+    }
+    .project-header-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .pull-quote {
+      border-left: 3px solid var(--accent);
+      padding: 1rem 0 1rem 1.75rem;
+      margin: 2.5rem 0;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .callout {
+      background: var(--paper-warm);
+      border: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0;
+    }
+    .callout-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .callout p {
+      font-size: 0.95rem !important;
+      margin-bottom: 0 !important;
+      line-height: 1.7 !important;
+    }
+
+    /* TECH STACK PILLS */
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 1rem 0 2rem;
+    }
+    .tech-pill {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--ink);
+      padding: 0.25rem 0.65rem;
+      color: var(--ink);
+    }
+
+    .ornament {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--border);
+      letter-spacing: 0.5em;
+      margin: 3rem 0;
+    }
+
+    .article-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.75rem;
+      color: var(--muted);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      margin-top: 3rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+
+    footer {
+      border-top: 2px solid var(--ink);
+      padding: 2rem clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4rem;
+    }
+    .footer-name { font-family: 'Playfair Display', serif; font-weight: 900; letter-spacing: -0.02em; }
+    .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; }
+  </style>
+</head>
+<body>
+
+  <header class="masthead">
+    <a class="masthead-home" href="index.html">Thomas Fink</a>
+    <span class="masthead-label">Writing</span>
+  </header>
+
+  <article class="article-wrap">
+
+    <div class="article-kicker">Side Projects · AI · Automation</div>
+
+    <h1>Two small AI projects that taught me more than any <em>tutorial</em></h1>
+
+    <div class="article-meta">
+      <span class="article-meta-author">Thomas Fink</span>
+      <span class="article-meta-date">July 2025</span>
+      <span class="article-meta-read">5 min read</span>
+    </div>
+
+    <div class="article-body">
+
+      <p>
+        There's a particular kind of learning that only happens when something is actually running. Not a course. Not a prototype. A real thing, doing a real job, failing in real ways — and requiring you to fix it.
+      </p>
+
+      <p>
+        Over the past year, I've built a handful of small AI-powered tools in my own time. Not to ship a product. Not to impress anyone. Just to understand, from the inside, how these systems actually behave when you put them in production — even a modest, personal kind of production.
+      </p>
+
+      <p>
+        Two of those projects stuck with me. Here's what I built, why, and what surprised me.
+      </p>
+
+      <h2>Project 1: A daily <em>tech digest</em> that curates itself</h2>
+
+      <div class="project-header">
+        <div class="project-header-icon">📨</div>
+        <div>
+          <div class="project-header-label">Project 01</div>
+          <div class="project-header-title">Tech & UX Digest Bot</div>
+          <div class="project-header-desc">A Telegram bot that scans 11 RSS feeds daily, filters noise, summarizes the most relevant articles per source using GPT, and delivers a curated digest — automatically.</div>
+        </div>
+      </div>
+
+      <div class="tech-stack">
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">OpenAI GPT</span>
+        <span class="tech-pill">Telegram API</span>
+        <span class="tech-pill">RSS / feedparser</span>
+        <span class="tech-pill">Flask</span>
+        <span class="tech-pill">Render</span>
+        <span class="tech-pill">UptimeRobot</span>
+      </div>
+
+      <p>
+        The problem I was trying to solve was embarrassingly simple: I follow too many sources, read too few of them, and end up missing things that actually matter. The standard solution is an RSS reader. But I wanted something that did the thinking for me — not just aggregation, but curation.
+      </p>
+
+      <p>
+        The bot pulls the latest entries from eleven feeds — The Verge, TechCrunch, Smashing Magazine, MIT Technology Review, OpenAI's blog, and a handful of others. For each source, it takes the top three articles and asks GPT to pick the single most relevant one for people working in tech, UX, or AI — and to explain why in two or three sentences. The result lands in a Telegram channel every morning.
+      </p>
+
+      <p>
+        Two design decisions turned out to matter more than I expected.
+      </p>
+
+      <p>
+        The first was the exclusion list. Early versions were polluted with car reviews, hardware tests, and consumer product announcements — technically "tech" content, but completely useless for my purposes. I ended up maintaining a simple keyword filter: if an article mentions certain terms — EV range, SUV, specific car brands — it gets dropped before GPT even sees it. Obvious in retrospect, but it took a few days of noisy digests to get there.
+      </p>
+
+      <p>
+        The second was source diversity management. Without any correction, the bot would quickly over-index on a handful of prolific sources and repeat the same outlets every day. The fix was a lightweight penalty system: sources that had appeared frequently in the past seven days got deprioritized. Simple, but it made the digest feel genuinely varied rather than dominated by whoever posts most.
+      </p>
+
+      <div class="pull-quote">
+        "The prompt is the product. Getting GPT to reliably pick the right article — and explain it well — took more iteration than the entire data pipeline."
+      </div>
+
+      <p>
+        What I didn't expect: how much of the interesting work was in the prompt, not the code. The filtering logic, the deduplication, the source penalty — all of that was straightforward. The hard part was writing a system prompt that reliably selected the right article and summarized it in a way that was actually useful. Too vague and the output was generic. Too prescriptive and it became rigid. Finding the right level of instruction took significantly more iteration than anything else in the project.
+      </p>
+
+      <div style="margin: 2.5rem auto; max-width: 320px;">
+        <img src="TechBot.png" alt="TechBot delivering a curated news digest in Telegram" style="width:100%; display:block; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,0.12); border:1px solid var(--border);">
+        <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--muted); margin-top:0.5rem; text-align:center;">TechBot — curated news digest delivered via Telegram</div>
+      </div>
+
+      <h2>Project 2: A daily <em>UX lesson</em> delivered to your phone</h2>
+
+      <div class="project-header">
+        <div class="project-header-icon">📘</div>
+        <div>
+          <div class="project-header-label">Project 02</div>
+          <div class="project-header-title">UX Learning Bot</div>
+          <div class="project-header-desc">A Telegram bot that sends one UX lesson per day — a concept, a real-world example, and a practical tip — generated fresh each morning by GPT.</div>
+        </div>
+      </div>
+
+      <div class="tech-stack">
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">OpenAI GPT</span>
+        <span class="tech-pill">Telegram API</span>
+      </div>
+
+      <p>
+        This one started as a joke. I was thinking about how I'd explain UX fundamentals to a non-designer — someone on a development team who genuinely wants to understand why certain decisions get made, but doesn't have time for a course or a book. What if there was just… a daily nudge? One concept. One example. One thing to think about.
+      </p>
+
+      <p>
+        The bot is almost offensively simple. Each morning it sends a prompt to GPT: act as a UX mentor, explain one concept in plain language, give a concrete example, and suggest a follow-up resource. The response arrives in Telegram. That's it.
+      </p>
+
+      <p>
+        What made it worth keeping was that it actually changed behavior — mine included. Getting a short, specific lesson at a fixed time has a different quality than browsing articles. There's no decision fatigue. You read it or you don't. And because GPT varies the topics without explicit programming, the lessons feel fresh rather than systematic. Some mornings it's Fitts' Law. Some mornings it's progressive disclosure or error state design. The randomness turned out to be a feature.
+      </p>
+
+      <div class="callout">
+        <div class="callout-label">What this taught me about AI-generated content</div>
+        <p>GPT at temperature 0.7 produces genuinely varied UX lessons — but "varied" isn't the same as "balanced." Left unchecked, it gravitates toward a handful of well-known concepts and neglects others. A more sophisticated version would track what's been sent and steer away from repetition. That's a future version problem. For now, the occasional repeat is a minor trade-off for zero maintenance.</p>
+      </div>
+
+      <div style="margin: 2.5rem auto; max-width: 320px;">
+        <img src="UX Coach.png" alt="UX Coach bot delivering a daily lesson in Telegram" style="width:100%; display:block; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,0.12); border:1px solid var(--border);">
+        <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--muted); margin-top:0.5rem; text-align:center;">UX Coach — daily UX lesson generated fresh each morning</div>
+      </div>
+
+      <h2>What both projects have in common</h2>
+
+      <p>
+        Looking at these two bots side by side, a few things stand out.
+      </p>
+
+      <p>
+        Neither of them required much code. The digest bot is around 150 lines of Python. The UX bot is under 30. The technical barrier to building something useful with AI is genuinely low — lower than I expected going in. What requires effort is the design layer: what exactly should this do, for whom, under what conditions, and what should it never do?
+      </p>
+
+      <p>
+        Both projects also revealed something about the difference between <em>working</em> and <em>working well</em>. The first version of the digest bot worked — it sent articles every morning. But they were often the wrong articles, from the same sources, repeating topics from the previous day. Getting it to work well meant adding friction in the right places: filters, penalties, clearer prompting. That gap between "runs without errors" and "actually useful" is where most of the real decisions live.
+      </p>
+
+      <p>
+        Deployment was intentionally minimal. Both bots run on Render's free tier — which means the server spins down after a period of inactivity. The fix was unglamorous: a UptimeRobot cron job that pings the service every ten minutes, keeping it alive. Not elegant, but free and reliable enough for personal infrastructure that just needs to show up every morning.
+      </p>
+
+      <p>
+        And both of them reinforced something I keep coming back to in my day job: <strong>the quality of AI output is almost entirely determined by the quality of the question you ask.</strong> Prompt engineering sounds like a technical skill. In practice it's a communication skill — being precise about intent, context, and constraints. That's not new. It's just design thinking, applied to a new medium.
+      </p>
+
+      <div class="ornament">· · ·</div>
+
+      <p style="color: var(--muted); font-size: 0.95rem;">
+        <em>Both bots are still running. The digest shows up every morning. The UX lesson is still occasionally surprising. If you're curious about the implementation or want to build something similar, I'm happy to share more detail.</em>
+      </p>
+
+    </div>
+
+    <div class="article-tags">
+      <span class="tag">Side Projects</span>
+      <span class="tag">AI</span>
+      <span class="tag">Automation</span>
+      <span class="tag">Telegram</span>
+      <span class="tag">GPT</span>
+      <span class="tag">Python</span>
+      <span class="tag">UX</span>
+    </div>
+
+    <a class="back-link" href="index.html">← Back to all writing</a>
+
+  </article>
+
+  <footer>
+    <div class="footer-name">Thomas Fink</div>
+    <div class="footer-copy">© 2026 · Graz, Austria · Design & Product Strategy</div>
+  </footer>
+
+</body>
+</html>

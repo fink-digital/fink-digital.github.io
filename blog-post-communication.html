@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spirited–Systematic — Thomas Fink</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1714;
+      --paper: #f5f0e8;
+      --paper-warm: #ede7d6;
+      --accent: #c8401a;
+      --accent-light: #e8c4b4;
+      --muted: #7a7268;
+      --border: #d4cec2;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* MASTHEAD */
+    .masthead {
+      border-bottom: 2px solid var(--ink);
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .masthead-home {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--ink);
+      padding: 0.9rem 0;
+    }
+    .masthead-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ARTICLE LAYOUT */
+    .article-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 2rem);
+    }
+
+    /* HEADER */
+    .article-kicker {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .article-kicker::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    .article-meta-author {
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .article-meta-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+    .article-meta-read {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    /* BODY TEXT */
+    .article-body p {
+      font-size: clamp(1rem, 1.5vw, 1.1rem);
+      line-height: 1.85;
+      margin-bottom: 1.75rem;
+      color: var(--ink);
+    }
+
+    .article-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin: 3rem 0 1.25rem;
+    }
+
+    .article-body h2 em { font-style: italic; color: var(--accent); }
+    .article-body strong { font-weight: 500; }
+
+    /* PULL QUOTE */
+    .pull-quote {
+      border-left: 3px solid var(--accent);
+      padding: 1rem 0 1rem 1.75rem;
+      margin: 2.5rem 0;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+
+    /* CALLOUT BOX */
+    .callout {
+      background: var(--paper-warm);
+      border: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0;
+    }
+    .callout-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .callout p {
+      font-size: 0.95rem !important;
+      margin-bottom: 0 !important;
+      line-height: 1.7 !important;
+    }
+
+    /* TAGS */
+    .article-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.75rem;
+      color: var(--muted);
+    }
+
+    /* BACK LINK */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      transition: color 0.2s;
+      display: block;
+    }
+    .back-link:hover { color: var(--accent); }
+
+    /* ORNAMENT */
+    .ornament {
+      text-align: center;
+      padding: 2rem 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--border);
+      letter-spacing: 0.5em;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="masthead">
+    <a class="masthead-home" href="index.html">Thomas Fink</a>
+    <span class="masthead-label">Personal · Leadership</span>
+  </header>
+
+  <main class="article-wrap">
+
+    <div class="article-kicker">Leadership · Self-awareness</div>
+
+    <h1>I found out I'm <em>Spirited–Systematic.</em><br>It explained a lot.</h1>
+
+    <div class="article-meta">
+      <span class="article-meta-author">Thomas Fink</span>
+      <span class="article-meta-date">January 2026</span>
+      <span class="article-meta-read">4 min read</span>
+    </div>
+
+    <div class="article-body">
+
+      <p>
+        I have a confession: I've never been a big fan of personality tests. Not because I think self-reflection is a waste of time — quite the opposite — but because most of them felt a bit too neat. You answer 40 questions, get a four-letter label, and suddenly a website knows you better than you know yourself. It always felt like astrology with better marketing.
+      </p>
+
+      <p>
+        So when a communication training I attended as part of a NormanGroup UX Master course included a communication style assessment, I went in with moderate expectations. Something useful might come out of it. Or not. Either way, it was probably going to be fine.
+      </p>
+
+      <p>
+        My result: <strong>Spirited–Systematic.</strong>
+      </p>
+
+      <p>
+        And then I sat with it for a while. Because unlike the four-letter labels I'd collected before, this one actually rang true — not just as a description of who I am, but as an explanation for things I'd been doing for years without fully understanding why.
+      </p>
+
+      <h2>Two sides that don't always agree</h2>
+
+      <p>
+        The "spirited" part made immediate sense. I like ideas. I like presenting them, connecting them, building on them. I get genuinely energised by the early stages of a project — when everything is still possible and the conversation is moving fast. Give me a whiteboard and a half-formed problem and I'm happy.
+      </p>
+
+      <p>
+        The "systematic" part was equally familiar, but in a different way. It's the part of me that, after the whiteboard session, needs to understand how things actually fit together. That wants the structure underneath the idea. That gets quietly uncomfortable when something sounds good but doesn't hold up under scrutiny.
+      </p>
+
+      <div class="pull-quote">
+        One part of me wants to move fast and explore. The other wants to slow down and make sure it's actually right.
+      </div>
+
+      <p>
+        What I hadn't fully seen before was how often these two sides create friction — not with other people, but within myself. The spirited part wants to pitch the idea before it's fully formed. The systematic part wants to wait until it's airtight. In meetings, this sometimes shows up as me jumping ahead, then suddenly pulling back to ask a clarifying question that probably sounds like I'm pumping the brakes.
+      </p>
+
+      <p>
+        Turns out there's a name for that. I'm not indecisive. I'm Spirited–Systematic.
+      </p>
+
+      <h2>The time I got it completely wrong</h2>
+
+      <p>
+        A few years ago, I worked with the founder of a US-based fintech startup. She was sharp, fast, and deeply entrepreneurial — the kind of person who leads with vision and moves by instinct. We were building something together, and on paper the conditions were good.
+      </p>
+
+      <p>
+        In practice, it was a friction-filled project from start to finish. And it took me embarrassingly long to understand why — because the reason was me.
+      </p>
+
+      <p>
+        My default when I want to move something forward is to build a case: here's the data, here's the rationale, here's why this makes sense. It works well in a lot of contexts. But with this founder, it was exactly the wrong approach. She didn't need to be convinced with numbers — she needed a thinking partner who could match her energy and explore possibilities at altitude before drilling into the mechanics. She wanted to <em>discuss</em>, not be presented to.
+      </p>
+
+      <p>
+        I also completely missed the cultural dimension. Working with a US-based entrepreneur — especially a founder who operates at high speed with high conviction — requires a different register than the one I'd built up working in European enterprise environments. The signals were there. I just wasn't reading them.
+      </p>
+
+      <div class="pull-quote">
+        I was communicating clearly. I just wasn't communicating to her.
+      </div>
+
+      <p>
+        The project worked out — eventually. But the unnecessary friction was real and costly. I'd like to say I figured this out halfway through, but it was mostly in retrospect that I understood what had happened. That kind of project is exactly why communication frameworks are useful: not as a formula, but as a lens that helps you see what you're missing in the moment.
+      </p>
+
+      <h2>The bigger shift: understanding other people</h2>
+
+      <p>
+        The personal insight was useful. But the more lasting effect was on how I started seeing the people around me.
+      </p>
+
+      <p>
+        Before the training, I think I had a default assumption that most people basically process information the way I do — they just needed the right framing or the right amount of detail to get there. If a conversation wasn't landing, it was usually a question of clarity or preparation.
+      </p>
+
+      <div class="callout">
+        <div class="callout-label">The insight</div>
+        <p>Many conflicts and misunderstandings are not about competence or bad intentions. They're about two people operating from genuinely different communication styles — and neither of them realising it.</p>
+      </div>
+
+      <p>
+        Someone who is highly "direct" in their style doesn't need more context — they need a clear recommendation. Someone who is more "considerate" doesn't need to be pushed — they need time to think it through without feeling steamrolled. And someone who is, say, very "spirited" might interpret a systematic colleague's questions as resistance, when they're actually just due diligence.
+      </p>
+
+      <p>
+        I've been in enough team situations over the years where something like this was clearly happening — where two smart, well-meaning people were just talking past each other. Having a framework to name what's going on doesn't solve everything, but it does create a bit of distance from the frustration. It shifts the question from "why is this person being difficult?" to "what communication style are they operating from, and how do I meet them there?"
+      </p>
+
+      <h2>What I actually do differently now</h2>
+
+      <p>
+        A few things changed in practice. When I'm preparing for an important conversation — a pitch, a difficult stakeholder meeting, a feedback session — I now spend a bit more time thinking about who I'm talking to, not just what I want to say. Do they need the full picture first, or the headline? Do they want to be convinced or consulted? Are they going to push back on ideas as a way of stress-testing them, or does pushback mean something has genuinely gone wrong?
+      </p>
+
+      <p>
+        I've also gotten better at recognising when my spirited side is outrunning my systematic side — and vice versa. In a fast-moving discussion, I try to notice when I'm jumping ahead before I've actually listened. And in the slower, more analytical moments, I try to notice when the systematic side is using "I need more information" as a way of avoiding a decision that's actually already made.
+      </p>
+
+      <div class="pull-quote">
+        Sometimes a simple framework creates a surprising amount of clarity. For me, this one did.
+      </div>
+
+      <p>
+        None of this is rocket science. But knowing <em>why</em> you do something is different from just noticing that you do it. And occasionally, a two-word label — Spirited–Systematic — is enough to make a pattern visible that's been there all along.
+      </p>
+
+    </div>
+
+    <div class="ornament">· · ·</div>
+
+    <div class="article-tags">
+      <span class="tag">Leadership</span>
+      <span class="tag">Communication</span>
+      <span class="tag">Self-awareness</span>
+      <span class="tag">NormanGroup</span>
+      <span class="tag">UX Master</span>
+    </div>
+
+    <a class="back-link" href="index.html">← Back to thomasfink.at</a>
+
+  </main>
+
+
+  <footer>
+    <div class="footer-name">Thomas Fink</div>
+    <div class="footer-copy">© 2026 · Graz, Austria · Design &amp; Product Strategy</div>
+  </footer>
+
+</body>
+</html>

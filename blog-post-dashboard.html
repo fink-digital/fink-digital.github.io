@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>I built a real-time project dashboard with AI — Thomas Fink</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1714;
+      --paper: #f5f0e8;
+      --paper-warm: #ede7d6;
+      --accent: #c8401a;
+      --muted: #7a7268;
+      --border: #d4cec2;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    .masthead {
+      border-bottom: 2px solid var(--ink);
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .masthead-home {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--ink);
+      padding: 0.9rem 0;
+    }
+    .masthead-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .article-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 2rem);
+    }
+
+    .article-kicker {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .article-kicker::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 6vw, 3.6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    h1 em { font-style: italic; color: var(--accent); }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    .article-meta-author { font-size: 0.85rem; font-weight: 500; }
+    .article-meta-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+    .article-meta-read {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    .article-body p {
+      font-size: clamp(1rem, 1.5vw, 1.1rem);
+      line-height: 1.85;
+      margin-bottom: 1.75rem;
+    }
+
+    .article-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin: 3rem 0 1.25rem;
+    }
+    .article-body h2 em { font-style: italic; color: var(--accent); }
+    .article-body strong { font-weight: 500; }
+
+    .pull-quote {
+      border-left: 3px solid var(--accent);
+      padding: 1rem 0 1rem 1.75rem;
+      margin: 2.5rem 0;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .callout {
+      background: var(--paper-warm);
+      border: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0;
+    }
+    .callout-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .callout p {
+      font-size: 0.95rem !important;
+      margin-bottom: 0 !important;
+      line-height: 1.7 !important;
+    }
+
+    /* FEATURE LIST */
+    .feature-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      margin: 2.5rem 0;
+      border: 1px solid var(--border);
+    }
+    .feature-item {
+      background: var(--paper);
+      padding: 1.25rem 1.5rem;
+    }
+    .feature-item-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+    .feature-item-text {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+
+    .article-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.75rem;
+      color: var(--muted);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      margin-top: 3rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+
+    .ornament {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--border);
+      letter-spacing: 0.5em;
+      margin: 3rem 0;
+    }
+
+    footer {
+      border-top: 2px solid var(--ink);
+      padding: 2rem clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4rem;
+    }
+    .footer-name { font-family: 'Playfair Display', serif; font-weight: 900; letter-spacing: -0.02em; }
+    .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; }
+
+    @media (max-width: 600px) {
+      .feature-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="masthead">
+    <a class="masthead-home" href="index.html">Thomas Fink</a>
+    <span class="masthead-label">Writing</span>
+  </header>
+
+  <article class="article-wrap">
+
+    <div class="article-kicker">AI Tools · Project Management · Automation</div>
+
+    <h1>I built a real-time project dashboard with AI — and it changed how I think about <em>what's possible</em></h1>
+
+    <div class="article-meta">
+      <span class="article-meta-author">Thomas Fink</span>
+      <span class="article-meta-date">March 2026</span>
+      <span class="article-meta-read">6 min read</span>
+    </div>
+
+    <div class="article-body">
+
+      <p>
+        I'm not a developer. I can read code, reason about it, and hold my own in a technical conversation — but I don't write production software for a living. That context matters for what I'm about to describe, because what happened a few weeks ago genuinely surprised me.
+      </p>
+
+      <p>
+        I built a fully automated, real-time project controlling dashboard. It pulls live data from three completely different systems, displays sprint health, capacity utilization, and cost tracking across rolling months, and exports cleanly to Excel — all in a single HTML file that opens in any browser, with no installation, no backend, and no subscription.
+      </p>
+
+      <p>
+        I built it using an AI agent. And the whole thing took a fraction of the time I would have expected.
+      </p>
+
+      <h2>The problem I was trying to solve</h2>
+
+      <p>
+        As a team lead managing a software development team, I need to answer a small set of questions reliably and quickly: Is the current sprint on track? Is the team over- or under-utilized this month? Are we burning hours in line with what we planned and budgeted? Where are the bottlenecks?
+      </p>
+
+      <p>
+        None of these questions are complicated. But getting the answers meant switching between three separate systems — a time-tracking tool, Jira, and Confluence — and mentally assembling the picture myself. Every time. That's the kind of low-grade friction that doesn't feel like a big deal until you add it up across weeks.
+      </p>
+
+      <p>
+        The obvious fix was a shared reporting view. The non-obvious part was actually building it without a dedicated BI team, without a custom backend, and without asking anyone to change how they work.
+      </p>
+
+      <h2>What we built, in plain terms</h2>
+
+      <p>
+        The dashboard is organized into five tabs, each generated automatically from the latest data:
+      </p>
+
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="feature-item-label">Forecast</div>
+          <div class="feature-item-text">Monthly Soll vs. Ist comparison per team member — actual hours, planned hours, attainment %, and cost. Future months show planned capacity from the forecast.</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-item-label">Current Sprint</div>
+          <div class="feature-item-text">Live sprint progress: open vs. done tickets, story point burndown, status by assignee, and a visual sprint health indicator.</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-item-label">Backlog</div>
+          <div class="feature-item-text">Full issue list with status, priority, assignee, and story points. Filterable and exportable to Excel directly from the browser.</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-item-label">Timesheets</div>
+          <div class="feature-item-text">Per-person hour breakdown by month with one-click Excel export — built entirely in the browser using SheetJS.</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-item-label">Roadmap</div>
+          <div class="feature-item-text">High-level sprint timeline with goals and milestone overview, auto-calculated from today's date.</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-item-label">Confluence Sync</div>
+          <div class="feature-item-text">The update workflow compares the current Confluence page against dashboard data and flags discrepancies before publishing.</div>
+        </div>
+      </div>
+
+      <p>
+        Data flows in from three sources: a timesheet export from the time-tracking system (dropped into a folder, picked up automatically by a Python script), Jira via REST API called directly from the browser, and Confluence via an MCP integration. The corporate proxy that blocks direct API calls from scripts? The browser session is already authenticated and passes through transparently — an elegant workaround that took about ten minutes to figure out with AI help.
+      </p>
+
+      <div style="margin: 2.5rem 0;">
+        <img src="Dashboard_Forecast_1.png" alt="Dashboard Forecast — Monatliche Soll/Ist Übersicht" style="width:100%; display:block; border:1px solid var(--border);">
+        <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--muted); margin-top:0.5rem;">Forecast tab — monthly planned vs. actual at a glance</div>
+      </div>
+
+      <div style="margin: 2.5rem 0;">
+        <img src="Dashboard_Forecast_2.png" alt="Dashboard Forecast — Aufschlüsselung nach Personen" style="width:100%; display:block; border:1px solid var(--border);">
+        <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--muted); margin-top:0.5rem;">Monthly breakdown by role — hours & costs (names and rates anonymised)</div>
+      </div>
+
+      <div style="margin: 2.5rem 0;">
+        <img src="Dashboard_Ticketbuchungen.png" alt="Dashboard Ticketbuchungen" style="width:100%; display:block; border:1px solid var(--border);">
+        <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--muted); margin-top:0.5rem;">Ticket bookings — hours logged vs. Jira estimate per story</div>
+      </div>
+
+      <h2>The real obstacles — and how we got past them</h2>
+
+      <p>
+        Every real automation project hits walls. This one had several.
+      </p>
+
+      <p>
+        Midway through the build, the forecast Excel export changed its format. Version 1 stored absolute hours per month. Version 2 switched to FTE values — 0.5, 0.8, 1.0 — with a separate column for hours per month, requiring a calculation to recover the actual planned hours. In a traditional Excel-based solution, this would have meant hunting through Power Query M code or rewriting pivot logic. Here, we detected the format change, described the new structure, and had working import logic in minutes.
+      </p>
+
+      <p>
+        There were also name mismatches across systems — the same person appearing differently in Jira and the timesheet export. A centralized name-mapping dictionary normalized everything at import time. Simple, explicit, and easy to update when someone new joins the team.
+      </p>
+
+      <div style="margin: 2.5rem 0;">
+        <img src="Dashboard_Sprinthealth.png" alt="Dashboard Sprint Health" style="width:100%; display:block; border:1px solid var(--border);">
+        <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--muted); margin-top:0.5rem;">Sprint health — velocity, burndown & stories in progress, live</div>
+      </div>
+
+      <div class="pull-quote">
+        "The productivity difference isn't just about speed. It's about what becomes possible."
+      </div>
+
+      <p>
+        Early versions had assumptions hardcoded — single-month references, fixed sprint numbers. These were replaced with fully dynamic logic: past months auto-detected from actual booking data, the current sprint calculated from today's date against the sprint schedule, future months projected forward automatically. The dashboard now just works, regardless of what month it is.
+      </p>
+
+      <div style="margin: 2.5rem 0;">
+        <img src="Dashboard_Roadmap.png" alt="Dashboard Roadmap" style="width:100%; display:block; border:1px solid var(--border);">
+        <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--muted); margin-top:0.5rem;">Roadmap — sprint timeline with epic progress, auto-calculated from today's date</div>
+      </div>
+
+      <h2>Why this beats the Excel approach</h2>
+
+      <p>
+        I want to be specific here, because "AI is faster" is a lazy claim. Let me describe what the alternative would have actually looked like.
+      </p>
+
+      <p>
+        A manually maintained Excel workbook for the same reporting would involve Power Query for the timesheet connection, M code that breaks whenever column names shift, pivot tables that need to be rebuilt whenever someone asks for a new view, and VBA for anything dynamic — burndown charts, rolling month comparisons, Soll/Ist calculations. It works. But it's brittle, hard to hand off, and requires real Excel programming expertise to maintain. Anyone who's inherited one of these workbooks knows the feeling.
+      </p>
+
+      <div class="callout">
+        <div class="callout-label">What actually changed</div>
+        <p>The entire dashboard — data pipeline, layout, interactivity, charts, export functionality — is plain Python and HTML/JavaScript. It's readable, version-controllable, and anyone with basic scripting knowledge can modify it. No VBA. No locked-down pivot structures. No format-dependent formulas that silently break.</p>
+      </div>
+
+      <p>
+        The features that would have been impractical in Excel — a dynamic multi-month Soll/Ist table with progress bars, a Confluence sync check as part of the update workflow, a live burndown that updates from the Jira API — were straightforward when I could describe what I wanted and iterate quickly with an AI that understood both the data and the HTML it needed to generate.
+      </p>
+
+      <h2>What I actually learned</h2>
+
+      <p>
+        The honest reflection: I went into this expecting to hit a ceiling. At some point, I thought, the complexity would exceed what I could reasonably describe to an AI, and I'd need a developer to take over.
+      </p>
+
+      <p>
+        That ceiling didn't appear where I expected it. The things that were hard weren't the technical things — they were the specification things. Knowing precisely what I wanted to see. Being able to describe the edge case clearly. Understanding why a particular output looked wrong and articulating what "right" would look like instead. Those are product thinking skills, not coding skills. And they mattered far more than I anticipated.
+      </p>
+
+      <p>
+        The dashboard is now being adapted as a reusable template for other project teams in the company. The architecture is deliberately generic — team roster, sprint schedule, forecast values are all parameterized. Adapting it to a new project means updating configuration, not rebuilding anything. Every team gets the same quality of real-time visibility, without needing a BI specialist or a developer who knows Excel automation.
+      </p>
+
+      <div class="ornament">· · ·</div>
+
+      <p style="color: var(--muted); font-size: 0.95rem;">
+        <em>If you're working on similar reporting challenges — or thinking about where AI agents can genuinely replace manual tooling — I'd like to hear what you're running into. The gap between "technically possible" and "practically useful" is still interesting territory.</em>
+      </p>
+
+    </div>
+
+    <div class="article-tags">
+      <span class="tag">AI Tools</span>
+      <span class="tag">Automation</span>
+      <span class="tag">Project Management</span>
+      <span class="tag">Jira</span>
+      <span class="tag">Dashboard</span>
+      <span class="tag">Team Lead</span>
+    </div>
+
+    <a class="back-link" href="index.html">← Back to all writing</a>
+
+  </article>
+
+  <footer>
+    <div class="footer-name">Thomas Fink</div>
+    <div class="footer-copy">© 2026 · Graz, Austria · Design & Product Strategy</div>
+  </footer>
+
+</body>
+</html>

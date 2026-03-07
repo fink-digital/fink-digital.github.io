@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thomas Fink — Digital Product Leadership</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1714;
+      --paper: #f5f0e8;
+      --paper-warm: #ede7d6;
+      --accent: #c8401a;
+      --accent-light: #e8c4b4;
+      --muted: #7a7268;
+      --border: #d4cec2;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* MASTHEAD */
+    .masthead {
+      border-bottom: 2px solid var(--ink);
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      background: var(--paper);
+      z-index: 100;
+    }
+    .masthead-issue {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .masthead-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-align: center;
+      padding: 0.8rem 0;
+      white-space: nowrap;
+    }
+    .masthead-nav {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .masthead-nav a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .masthead-nav a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem);
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: end;
+      min-height: 80vh;
+      position: relative;
+    }
+    .hero-kicker {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-kicker::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+    .hero-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 2rem;
+    }
+    .hero-headline em { font-style: italic; color: var(--accent); }
+    .hero-bio {
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      max-width: 480px;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--ink);
+      padding: 0.3rem 0.75rem;
+    }
+    .hero-scroll {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-scroll::after {
+      content: 'v';
+      font-size: 1rem;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+    .hero-number {
+      position: absolute;
+      right: clamp(1.5rem, 5vw, 4rem);
+      top: 2rem;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(8rem, 20vw, 18rem);
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--border);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* POSITIONING SECTION */
+    .positioning {
+      padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem);
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .positioning-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3rem;
+      max-width: 1100px;
+      margin: 0 auto 3rem;
+    }
+    .pos-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .pos-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+    }
+    .pos-text {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: #b8b0a4;
+    }
+    .positioning-quote {
+      border-top: 1px solid #3a3530;
+      padding-top: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.2rem, 3vw, 1.9rem);
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--paper);
+    }
+
+    /* SECTION */
+    .section {
+      padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem);
+      border-bottom: 1px solid var(--border);
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 0.75rem;
+    }
+    .section-label {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .section-number {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+    .project-card {
+      border: 1px solid var(--border);
+      margin: -1px -1px 0 0;
+      padding: 2rem;
+      transition: background 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--ink);
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .project-card:hover::before { transform: translateY(0); }
+    .project-card:hover .project-title,
+    .project-card:hover .project-desc,
+    .project-card:hover .project-meta,
+    .project-card:hover .project-num { color: var(--paper); }
+    .project-card:hover .project-tag { border-color: var(--paper-warm); color: var(--paper-warm); }
+    .project-card:hover .stat-block { border-left-color: var(--accent); }
+    .project-card:hover .stat-label { color: #a09890; }
+    .project-card:hover .stat-value { color: var(--paper); }
+    .project-card:hover .stat-sub { color: #a09890; }
+    .project-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 1.5rem;
+      transition: color 0.25s;
+    }
+    .project-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.75rem;
+      position: relative;
+      z-index: 1;
+      transition: color 0.25s;
+    }
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+      transition: color 0.25s;
+    }
+    .project-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.6rem;
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+      transition: all 0.25s;
+      display: inline-block;
+    }
+    .project-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      margin-top: 1rem;
+      position: relative;
+      z-index: 1;
+      transition: color 0.25s;
+    }
+    .img-placeholder {
+      background: var(--paper-warm);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+      aspect-ratio: 4/3;
+      width: 100%;
+    }
+
+    /* BLOG */
+    .blog-list { display: flex; flex-direction: column; }
+    .blog-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: baseline;
+      gap: 2rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--ink);
+      transition: padding-left 0.25s;
+    }
+    .blog-item:hover { padding-left: 1rem; }
+    .blog-item:hover .blog-title { color: var(--accent); }
+    .blog-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+    .blog-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      transition: color 0.2s;
+    }
+    .blog-category {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0.5rem; bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+    .timeline-item { position: relative; margin-bottom: 2.5rem; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2rem; top: 0.45rem;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--paper);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+    .timeline-company {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+    .timeline-role {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.25rem;
+    }
+    .timeline-period {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* SKILLS */
+    .skill-group-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .skill-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .skill-bar { width: 60px; height: 2px; background: var(--border); position: relative; }
+    .skill-bar-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--ink); }
+
+    /* CONTACT */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .contact-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    .contact-headline em { font-style: italic; color: var(--accent); }
+    .contact-text { font-size: 1rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+      transition: color 0.2s;
+    }
+    .contact-link:hover { color: var(--accent); }
+    .contact-link-icon {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      min-width: 4rem;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px solid var(--ink);
+    }
+    .footer-name { font-family: 'Playfair Display', serif; font-weight: 900; letter-spacing: -0.02em; }
+    .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .ornament { text-align: center; padding: 1.5rem 0; font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--border); letter-spacing: 0.5em; }
+
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-number { display: none; }
+      .masthead { grid-template-columns: 1fr 1fr; }
+      .masthead-title { display: none; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .blog-item { grid-template-columns: 1fr; gap: 0.3rem; }
+      .blog-category { display: none; }
+      .masthead-nav { gap: 0.75rem; }
+      .positioning-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    /* STAT BLOCKS IN PROJECT CARDS */
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0; position: relative; z-index: 1; }
+    .stat-block { border-left: 2px solid var(--accent); padding-left: 0.75rem; transition: border-color 0.25s; }
+    .stat-label { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem; transition: color 0.25s; }
+    .stat-value { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; letter-spacing: -0.02em; color: var(--ink); transition: color 0.25s; }
+    .stat-sub { font-size: 0.75rem; color: var(--muted); transition: color 0.25s; }
+
+    /* HERO STATS */
+    .hero-stats {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-stat { display: flex; flex-direction: column; gap: 0.15rem; }
+    .hero-stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--ink);
+    }
+    .hero-stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .hero-stat-divider {
+      width: 1px;
+      height: 2rem;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MASTHEAD -->
+  <header class="masthead">
+    <div class="masthead-issue">Vol. I · 2025</div>
+    <div class="masthead-title">Thomas Fink</div>
+    <nav class="masthead-nav">
+      <a href="#projects">Work</a>
+      <a href="#writing">Writing</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-kicker">Digital Product Leader</div>
+      <h1 class="hero-headline">
+        Where<br>
+        <em>product</em><br>
+        meets<br>
+        strategy.
+      </h1>
+    </div>
+    <div class="hero-right">
+      <p class="hero-bio">
+        I'm Thomas Fink — Design Team Lead, Business Development Manager, and Product Owner based in Graz, Austria. For over a decade I've been building products at the intersection of user experience, agile delivery, and business growth.
+      </p>
+      <p class="hero-bio">
+        Currently leading a nine-person design team through a pivotal transformation: from design agency to AI-powered analytics and financial services — redefining what design means in a data-first world.
+      </p>
+      <div class="hero-tags">
+        <span class="tag">Product Ownership</span>
+        <span class="tag">Digital Product Leadership</span>
+        <span class="tag">Business Development</span>
+        <span class="tag">Agile</span>
+        <span class="tag">AI + Analytics</span>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-value">€27M+</span>
+          <span class="hero-stat-label">in frameworks won</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">9</span>
+          <span class="hero-stat-label">person team led</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">6</span>
+          <span class="hero-stat-label">products shipped</span>
+        </div>
+      </div>
+      <div class="hero-scroll">Scroll to explore</div>
+    </div>
+    <div class="hero-number" aria-hidden="true">TF</div>
+  </section>
+
+  <!-- POSITIONING -->
+  <section class="positioning reveal">
+    <div class="positioning-grid">
+      <div>
+        <div class="pos-label">What I am</div>
+        <p class="pos-title">A bridge builder between Design, Business, and AI.</p>
+        <p class="pos-text">Technology is accelerating because of AI. Customer needs are not. Design is the bridge between those two worlds — framing the right problems and turning technology into solutions that create real value.</p>
+      </div>
+      <div>
+        <div class="pos-label">What I'm looking for</div>
+        <p class="pos-title">Strategic conversations and meaningful collaborations.</p>
+        <p class="pos-text">I'm interested in talking to people who are thinking seriously about where Design fits in an AI-driven world — whether that's a leadership conversation, a new project, or just an interesting exchange of ideas.</p>
+      </div>
+      <div>
+        <div class="pos-label">What I'm not</div>
+        <p class="pos-title">A pixel pusher or a backlog manager.</p>
+        <p class="pos-text">I'm at my best when I'm framing problems, pitching ideas, and aligning teams around a direction — not when I'm deep in operational detail. If you need someone to move fast at the strategic level, that's me.</p>
+      </div>
+    </div>
+    <div class="positioning-quote">
+      "I help organisations use digital products and AI strategically — so they build the right things, not just things right."
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section reveal" id="projects">
+    <div class="section-header">
+      <h2 class="section-label">Selected Work</h2>
+      <span class="section-number">01 / 04</span>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-num">001</div>
+        <h3 class="project-title">Business Development &amp; Tender Wins</h3>
+        <p class="project-desc">Led the full tender pipeline — from opportunity scanning to concept development, proposal writing, and submission. Won multiple complex public tenders independently, including cross-border bids where eligibility required sourcing subcontractors and borrowing qualifications from partners in other countries. One win required solving a last-minute ISO certification gap this way — clearing the eligibility requirement and securing the bid. Implemented an AI-based workflow across the entire tender process that significantly increased throughput — more bids, faster turnaround, without adding headcount. Where the tender process requires it, I also handle the pitch — presenting the proposal and representing the company in front of the client.</p>
+        <div class="stat-grid">
+          <div class="stat-block">
+            <div class="stat-label">BRZ · Federal IT Agency</div>
+            <div class="stat-value">€ 8.9M</div>
+            <div class="stat-sub">Framework won · max. value · 4+2 yrs</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">Land Steiermark</div>
+            <div class="stat-value">€ 18.9M</div>
+            <div class="stat-sub">Framework won · max. value · 4+1 yrs</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">Salzburg AG</div>
+            <div class="stat-value">4,000 PT</div>
+            <div class="stat-sub">Framework won · max. value · 4 yrs</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">RFP · UAE · IP Management</div>
+            <div class="stat-value">€ 1.2M</div>
+            <div class="stat-sub">Won · AI-assisted · led proposal</div>
+          </div>
+        </div>
+        <span class="project-tag">Business Dev</span>
+        <span class="project-tag" style="margin-left:0.3rem;">Tenders</span>
+        <span class="project-tag" style="margin-left:0.3rem;">Strategy</span>
+        <div class="project-meta">Acuity Analytics · 2024 – Present</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">002</div>
+        <h3 class="project-title">Design Team Leadership</h3>
+        <p class="project-desc">Leading a nine-person design team through two back-to-back acquisitions: Parkside Interactive was acquired by Ascent (backed by Horizon Capital), which was then acquired by Acuity — later rebranded as Acuity Analytics — backed by Permira, one of Europe's largest PE firms. I took over the team mid-transition, when the first integration had barely started — because behind the scenes, the second deal was already being shaped. Acuity Analytics operates in KPO, data &amp; analytics, and financial services, and acquired us specifically to strengthen their tech arm across Data, AI, and Software Engineering. Keeping a team stable, utilised, and strategically positioned while the organisational context kept shifting underneath — that was the real work.</p>
+        <div class="stat-grid">
+          <div class="stat-block">
+            <div class="stat-label">Team Utilisation · Year 1</div>
+            <div class="stat-value">83%</div>
+            <div class="stat-sub">Best in team history</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">Team Revenue</div>
+            <div class="stat-value">€ 1.5M</div>
+            <div class="stat-sub">2025 · 9-person team</div>
+          </div>
+        </div>
+        <span class="project-tag">Leadership</span>
+        <span class="project-tag" style="margin-left:0.3rem;">Change Mgmt</span>
+        <span class="project-tag" style="margin-left:0.3rem;">AI Strategy</span>
+        <div class="project-meta">Acuity Analytics · 2025 – Present</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">003</div>
+        <h3 class="project-title">Österreich radelt — App Relaunch</h3>
+        <p class="project-desc">Product Owner for the full cross-platform relaunch of the Österreich radelt app — Austria's national initiative to motivate people to use their bike for everyday routes. Built with Flutter and Material Design, shipping on both iOS and Android. One of the core challenges was coordinating requirements across all nine Austrian federal states — each with their own stakeholders, priorities, and political dynamics. Delivered on time and within budget. Key features included health integration: users can sync data from sports watches and fitness trackers directly into the app. Since the relaunch, app users more than doubled — from ~10,700 to over 23,700 — with the platform reaching a peak of 44,000+ active users nationally in 2024.</p>
+        <div class="stat-grid">
+          <div class="stat-block">
+            <div class="stat-label">Active Users</div>
+            <div class="stat-value">44,000+</div>
+            <div class="stat-sub">Peak 2024 · national</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">App Growth</div>
+            <div class="stat-value">2×+</div>
+            <div class="stat-sub">Since relaunch · iOS & Android</div>
+          </div>
+        </div>
+        <span class="project-tag">Product Ownership</span>
+        <span class="project-tag" style="margin-left:0.3rem;">Flutter</span>
+        <span class="project-tag" style="margin-left:0.3rem;">Mobile</span>
+        <div class="project-meta">Acuity Analytics · 2023 – 2024</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">004</div>
+        <h3 class="project-title">Trademark Management System</h3>
+        <p class="project-desc">Led the full RFP process for a complex enterprise trademark management platform — from proposal to win (€ 1.2M). Kicked off the project with a four-day onsite workshop to define the MVP scope: using a user scenario-based approach, we identified three core scenarios and worked through every required step within each — a structured method that gave the team a shared, traceable foundation from day one. Now supporting the team as Project Manager: responsible for controlling, internal and external stakeholder communication, and escalation management throughout delivery. The current challenge is building the MVP within a three-month window while coordinating a dev team of ~10 FTEs — a combination that demands tight prioritisation and clear communication at every level. We're also seeing an interesting shift: as AI coding tools like Claude Code accelerate individual output, the bottlenecks are moving — away from pure implementation speed and towards integration, review quality, and architectural decision-making.</p>
+        <div class="stat-grid">
+          <div class="stat-block">
+            <div class="stat-label">SOW Value</div>
+            <div class="stat-value">€ 1.2M</div>
+            <div class="stat-sub">Won</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">MVP Workshop</div>
+            <div class="stat-value">4 Days</div>
+            <div class="stat-sub">Onsite · scenario-based</div>
+          </div>
+        </div>
+        <span class="project-tag">RFP &amp; Presales</span>
+        <span class="project-tag" style="margin-left:0.3rem;">Project Management</span>
+        <span class="project-tag" style="margin-left:0.3rem;">UX Strategy</span>
+        <div class="project-meta">Acuity Analytics · 2026 – Present</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">005</div>
+        <h3 class="project-title">fit2invest — Raiffeisen Steiermark</h3>
+        <p class="project-desc">Product Owner on fit2invest — a gamified investment simulator for Raiffeisen-Landesbank Steiermark, built with the University of Graz. The platform lets users experience up to 30 years of real stock market history in minutes, risk-free and scientifically grounded. We inherited an existing UX concept that needed a complete overhaul, introduced D3.js for data visualisation as requirements evolved, and ran weekly stakeholder meetings across multiple parties — all on a fixed-price contract. I led the project through its first six months before handing it over due to educational leave.</p>
+        <div class="stat-grid">
+          <div class="stat-block">
+            <div class="stat-label">Games played</div>
+            <div class="stat-value">10,000+</div>
+            <div class="stat-sub">Since launch 2024</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">Status</div>
+            <div class="stat-value">Live</div>
+            <div class="stat-sub"><a href="https://fit2invest.raiffeisen.at/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;">fit2invest.raiffeisen.at</a></div>
+          </div>
+        </div>
+        <span class="project-tag">Product Ownership</span>
+        <span class="project-tag" style="margin-left:0.3rem;">Fintech</span>
+        <span class="project-tag" style="margin-left:0.3rem;">Gamification</span>
+        <span class="project-tag" style="margin-left:0.3rem;">D3.js</span>
+        <div class="project-meta">Acuity Analytics · Raiffeisen-Landesbank Steiermark · 2023 – 2024</div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">006</div>
+        <h3 class="project-title">Multi-Tenant E-Commerce Relaunch</h3>
+        <p class="project-desc">Product Owner on the multi-million euro relaunch of four webshops onto a unified multi-tenant platform for one of Switzerland's largest retailers. The team structure alone reflected the scale: two backend teams running in parallel, plus a dedicated frontend team — one of the largest delivery setups I've worked in. The real complexity wasn't technical, it was process: unifying online, in-store, and hybrid fulfilment flows — buy online, pick up in store, buy in store, ship to home — across four shop brands onto a single coherent platform. On the tech side, we introduced Solr search to improve product discovery, though tuning early search result quality required significant iteration. Server-side rendering combined with Google Analytics created serious performance challenges around page load times — balancing SEO and tracking needs against frontend performance was an ongoing battle throughout the project.</p>
+        <div class="stat-grid">
+          <div class="stat-block">
+            <div class="stat-label">Scope</div>
+            <div class="stat-value">4 Shops</div>
+            <div class="stat-sub">Migrated to one platform</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-label">Client</div>
+            <div class="stat-value">CH Retail</div>
+            <div class="stat-sub">Major Swiss retailer</div>
+          </div>
+        </div>
+        <span class="project-tag">Product Ownership</span>
+        <span class="project-tag" style="margin-left:0.3rem;">E-Commerce</span>
+        <span class="project-tag" style="margin-left:0.3rem;">React</span>
+        <span class="project-tag" style="margin-left:0.3rem;">Solr</span>
+        <span class="project-tag" style="margin-left:0.3rem;">SSR</span>
+        <div class="project-meta">Netconomy · 2015–2020</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LIVE PRODUCTS -->
+  <section class="section reveal">
+    <div class="section-header">
+      <h2 class="section-label">Live Products</h2>
+      <span class="section-number" style="font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; color:var(--muted);">In the wild</span>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:3rem;">
+
+      <div>
+        <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem;">Österreich radelt · iOS &amp; Android</div>
+        <div style="display:flex; gap:0.75rem; align-items:flex-end;">
+          <img src="Radelt4.png" alt="Österreich radelt — Onboarding" style="flex:1; width:0; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,0.12); border:1px solid var(--border);">
+          <img src="Radelt3.png" alt="Österreich radelt — Main Screen" style="flex:1; width:0; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,0.12); border:1px solid var(--border);">
+          <img src="Radelt1.png" alt="Österreich radelt — Health Integration" style="flex:1; width:0; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,0.12); border:1px solid var(--border);">
+        </div>
+      </div>
+
+      <div>
+        <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem;">fit2invest · Raiffeisen Steiermark</div>
+        <div style="display:flex; gap:0.75rem; align-items:flex-end;">
+          <img src="fit2invest1.png" alt="fit2invest — Splash" style="flex:1; width:0; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,0.12); border:1px solid var(--border);">
+          <img src="fit2invest2.png" alt="fit2invest — Landing" style="flex:1; width:0; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,0.12); border:1px solid var(--border);">
+          <img src="Fit2invest3.png" alt="fit2invest — Gameplay" style="flex:1; width:0; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,0.12); border:1px solid var(--border);">
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WRITING -->
+  <section class="section reveal" id="writing">
+    <div class="section-header">
+      <h2 class="section-label">Writing</h2>
+      <span class="section-number">02 / 04</span>
+    </div>
+    <div class="blog-list">
+
+      <a class="blog-item" href="blog-post-bots.html">
+        <span class="blog-date">Jul 2025</span>
+        <span class="blog-title">Two small AI projects that taught me more than any tutorial</span>
+        <span class="blog-category">Side Projects</span>
+      </a>
+
+      <a class="blog-item" href="blog-post-mtb.html">
+        <span class="blog-date">Oct 2025</span>
+        <span class="blog-title">I entered my first enduro race. It was humbling. I loved every second.</span>
+        <span class="blog-category">Personal</span>
+      </a>
+
+      <a class="blog-item" href="blog-post-communication.html">
+        <span class="blog-date">Jan 2026</span>
+        <span class="blog-title">I found out I'm Spirited–Systematic. It explained a lot.</span>
+        <span class="blog-category">Leadership</span>
+      </a>
+
+      <a class="blog-item" href="blog-post-cop.html">
+        <span class="blog-date">Feb 2026</span>
+        <span class="blog-title">Why design still matters — and why I'm building a community to prove it</span>
+        <span class="blog-category">Leadership</span>
+      </a>
+
+      <a class="blog-item" href="blog-post-dashboard.html">
+        <span class="blog-date">Mar 2026</span>
+        <span class="blog-title">I built a real-time project dashboard with AI — and it changed how I think about what's possible</span>
+        <span class="blog-category">AI Tools</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section reveal" id="about">
+    <div class="section-header">
+      <h2 class="section-label">About &amp; Experience</h2>
+      <span class="section-number">03 / 04</span>
+    </div>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 4rem;">
+
+      <div>
+        <div style="display:flex; align-items:center; gap:1.5rem; margin-bottom:2rem; padding-bottom:2rem; border-bottom:1px solid var(--border);">
+          <img src="1592405780836.jpeg" alt="Thomas Fink" style="width:140px; height:140px; object-fit:cover; object-position:center top; border-radius:50%; flex-shrink:0; border:3px solid var(--border);">
+          <div>
+            <div style="font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700; letter-spacing:-0.01em; margin-bottom:0.2rem;">Thomas Fink</div>
+            <div style="font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted);">Digital Product Leader · Graz, Austria</div>
+          </div>
+        </div>
+        <p style="font-size:1.05rem; line-height:1.9; margin-bottom:2rem;">
+          I've spent the last decade at the crossroads of design, product, and business — always drawn to the moments where good ideas meet real constraints and something useful gets built. My background is in Business Informatics (MSc, FH Campus 02), which means I've always had one foot in the technical world and one in the human one.
+        </p>
+        <p style="font-size:1.05rem; line-height:1.9; margin-bottom:2rem;">
+          Since 2020 I've been at Parkside Interactive — now Acuity Analytics — through two back-to-back acquisitions: first by Ascent (Horizon Capital), then by Acuity (Permira). I took over the design team mid-transition, with the second deal already in motion behind the scenes. That experience shaped a lot of how I think about leadership under uncertainty.
+        </p>
+        <p style="font-size:1.05rem; line-height:1.9; margin-bottom:2rem;">
+          What genuinely excites me right now is the question of how design services stay relevant — and become more valuable — as AI reshapes the analytics and data world. That's the puzzle I'm working on every day.
+        </p>
+        <p style="font-size:1.05rem; line-height:1.9; margin-bottom:3rem;">
+          Outside of work: I live in Kumberg near Graz with my wife and two sons (aged 1 and 4). When I'm not on dad duty, I'm most likely on a mountain bike — chasing trails and occasionally entering races I'm not quite prepared enough for. I also spend a fair amount of time tinkering with AI tools, building small automations, and trying to stay ahead of what's actually changing in this space rather than just reading about it.
+        </p>
+
+        <div class="ornament">· · ·</div>
+
+        <div style="margin-top:2.5rem;">
+          <div class="skill-group-title">Core Skills</div>
+          <div style="margin-top:1rem;">
+            <div class="skill-item">
+              <span>Product Ownership &amp; Backlog</span>
+              <div class="skill-bar"><div class="skill-bar-fill" style="width:95%"></div></div>
+            </div>
+            <div class="skill-item">
+              <span>Design Team Leadership</span>
+              <div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div>
+            </div>
+            <div class="skill-item">
+              <span>Business Development / Tenders</span>
+              <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+            </div>
+            <div class="skill-item">
+              <span>Agile Project Management</span>
+              <div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div>
+            </div>
+            <div class="skill-item">
+              <span>UX Strategy</span>
+              <div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div>
+            </div>
+            <div class="skill-item">
+              <span>Resource &amp; Capacity Planning</span>
+              <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="skill-group-title" style="margin-bottom:1.5rem;">Career Timeline</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-company">Acuity Analytics</div>
+            <div class="timeline-role">Design Team Lead</div>
+            <div class="timeline-period">Jan 2025 – Present</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-company">Ascent · Acuity Analytics</div>
+            <div class="timeline-role">Business Development Manager</div>
+            <div class="timeline-period">Jun 2024 – Present</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-company">Parkside Interactive</div>
+            <div class="timeline-role">Teamlead &amp; Agile Project Management</div>
+            <div class="timeline-period">Nov 2021 – Aug 2024</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-company">Parkside Interactive</div>
+            <div class="timeline-role">Product Owner</div>
+            <div class="timeline-period">Feb 2020 – Aug 2024</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-company">Netconomy</div>
+            <div class="timeline-role">Product Owner</div>
+            <div class="timeline-period">Apr 2015 – Feb 2020</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-company">pidas</div>
+            <div class="timeline-role">Technical IT Support</div>
+            <div class="timeline-period">Mar 2014 – Apr 2015</div>
+          </div>
+        </div>
+
+        <div style="margin-top:3rem;">
+          <div class="skill-group-title" style="margin-bottom:1.5rem;">Education</div>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-company">FH Campus 02</div>
+              <div class="timeline-role">MSc Business Informatics</div>
+              <div class="timeline-period">2015 – 2017</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-company">FH Kärnten</div>
+              <div class="timeline-role">BSc Geoinformatics</div>
+              <div class="timeline-period">2008 – 2011</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <!-- CTA -->
+  <section style="background:var(--accent); padding:clamp(3rem,6vw,5rem) clamp(1.5rem,5vw,4rem);">
+    <div style="max-width:900px; margin:0 auto; display:grid; grid-template-columns:1fr auto; align-items:center; gap:3rem;">
+      <div>
+        <div style="font-family:'DM Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-bottom:1rem;">Get in touch</div>
+        <h2 style="font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4vw,3rem); font-weight:900; letter-spacing:-0.03em; line-height:1.05; color:#fff; margin-bottom:1rem;">
+          Let's talk.
+        </h2>
+        <p style="font-size:1rem; color:rgba(255,255,255,0.8); line-height:1.75; max-width:480px;">
+          Whether it's a strategic role, a project, or just an interesting conversation about digital products and AI — I'm always open to a good exchange.
+        </p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:1rem; flex-shrink:0;">
+        <a href="https://www.linkedin.com/in/nicefink/" target="_blank" style="display:inline-block; background:#fff; color:var(--accent); font-family:'DM Mono',monospace; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none; padding:0.9rem 2rem; font-weight:400; transition:opacity 0.2s;">
+          Connect on LinkedIn →
+        </a>
+        <a href="mailto:thomas_fink@live.at" style="display:inline-block; border:1px solid rgba(255,255,255,0.4); color:#fff; font-family:'DM Mono',monospace; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none; padding:0.9rem 2rem; font-weight:400; transition:opacity 0.2s; text-align:center;">
+          Send an email →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-name">Thomas Fink</div>
+    <div class="footer-copy">2025 · Kumberg / Graz, Austria · Design &amp; Product Strategy</div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    reveals.forEach(function(el) { observer.observe(el); });
+  </script>
+
+</body>
+</html>

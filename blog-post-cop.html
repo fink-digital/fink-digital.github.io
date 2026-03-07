@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Why Design Still Matters — Thomas Fink</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1714;
+      --paper: #f5f0e8;
+      --paper-warm: #ede7d6;
+      --accent: #c8401a;
+      --accent-light: #e8c4b4;
+      --muted: #7a7268;
+      --border: #d4cec2;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* MASTHEAD */
+    .masthead {
+      border-bottom: 2px solid var(--ink);
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .masthead-home {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--ink);
+      padding: 0.9rem 0;
+    }
+    .masthead-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ARTICLE LAYOUT */
+    .article-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 2rem);
+    }
+
+    /* HEADER */
+    .article-kicker {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .article-kicker::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    .article-meta-author {
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .article-meta-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+    .article-meta-read {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    /* BODY TEXT */
+    .article-body p {
+      font-size: clamp(1rem, 1.5vw, 1.1rem);
+      line-height: 1.85;
+      margin-bottom: 1.75rem;
+      color: var(--ink);
+    }
+
+    .article-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin: 3rem 0 1.25rem;
+    }
+
+    .article-body h2 em { font-style: italic; color: var(--accent); }
+
+    .article-body strong {
+      font-weight: 500;
+    }
+
+    /* PULL QUOTE */
+    .pull-quote {
+      border-left: 3px solid var(--accent);
+      padding: 1rem 0 1rem 1.75rem;
+      margin: 2.5rem 0;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+
+    /* CALLOUT BOX */
+    .callout {
+      background: var(--paper-warm);
+      border: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0;
+    }
+    .callout-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .callout p {
+      font-size: 0.95rem !important;
+      margin-bottom: 0 !important;
+      line-height: 1.7 !important;
+    }
+
+    /* TAGS */
+    .article-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.75rem;
+      color: var(--muted);
+    }
+
+    /* BACK LINK */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      margin-top: 3rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+
+    /* ORNAMENT */
+    .ornament {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--border);
+      letter-spacing: 0.5em;
+      margin: 3rem 0;
+    }
+
+    footer {
+      border-top: 2px solid var(--ink);
+      padding: 2rem clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4rem;
+    }
+    .footer-name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+    .footer-copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="masthead">
+    <a class="masthead-home" href="index.html">Thomas Fink</a>
+    <span class="masthead-label">Writing</span>
+  </header>
+
+  <article class="article-wrap">
+
+    <div class="article-kicker">Design Leadership · Community of Practice</div>
+
+    <h1>Why <em>design</em> still matters — and why I'm building a community to prove it</h1>
+
+    <div class="article-meta">
+      <span class="article-meta-author">Thomas Fink</span>
+      <span class="article-meta-date">February 2026</span>
+      <span class="article-meta-read">7 min read</span>
+    </div>
+
+    <div class="article-body">
+
+      <p>
+        A few months ago, I had a conversation that stuck with me. A colleague — smart, technically sharp — looked at me and said: <em>"With AI doing the heavy lifting now, do we still actually need designers?"</em> He wasn't being provocative. He genuinely meant it. And that question has been living rent-free in my head ever since.
+      </p>
+
+      <p>
+        Because here's the honest truth: I understand why people ask it. We're in a moment where AI tools generate interfaces, write copy, produce visuals, and automate workflows at a speed and scale that would have seemed absurd five years ago. If you define design as "making things look good," then yes — that's increasingly a commodity. AI handles it fine.
+      </p>
+
+      <p>
+        But that definition has always been wrong. And right now, in the context of what's happening at Acuity Analytics, I'm more convinced of that than ever.
+      </p>
+
+      <h2>The company I work for just changed — completely</h2>
+
+      <p>
+        Acuity Analytics, where I lead the design team, is not the company it was two years ago. We started as a design agency with a strong emphasis on UX and visual craft. Then came two acquisitions. And now we're something entirely different: an AI, data, and digital company with deep roots in financial services, serving over 600 clients across sectors like insurance, banking, and risk management.
+      </p>
+
+      <p>
+        That's not a small shift. That's a total context change. The design team — nine people who built their expertise around user research, interaction design, and product thinking — suddenly finds itself in a world of dashboards, predictive models, agentic workflows, and AI-assisted decision engines.
+      </p>
+
+      <p>
+        For a while, I'll admit, I wasn't sure how to navigate that. What does a design team do inside a company that's primarily selling AI and data capabilities? Where do we add value? Where do we fit?
+      </p>
+
+      <div class="pull-quote">
+        "AI adoption doesn't fail because the model is wrong. It fails because the human side of the equation was never designed."
+      </div>
+
+      <h2>Then I understood what the real problem was</h2>
+
+      <p>
+        The more I looked at what Acuity's clients actually struggle with, the clearer it became. The problem isn't the AI itself. The models are often solid. The data pipelines work. The predictions are good.
+      </p>
+
+      <p>
+        The problem is what happens when the AI hands something to a human.
+      </p>
+
+      <p>
+        Think about a claims manager at an insurance company. The AI has analyzed a claim, scored its risk, flagged anomalies, and made a recommendation. Now it's on the human's desk. And suddenly that person has to decide: do I trust this? Do I approve, override, or escalate? On what basis? With what information?
+      </p>
+
+      <p>
+        If the interface doesn't explain the AI's reasoning — if the human can't see why the system flagged something, what data it used, how confident it is — then the whole setup falls apart. Either the human rubber-stamps everything (which defeats the purpose of human oversight) or they don't trust it at all (which defeats the purpose of the AI). Neither outcome is good.
+      </p>
+
+      <p>
+        This is the design problem of our era. Not "how do we make this look nice," but: <strong>how do we design the moment when a human and an AI system share a decision?</strong>
+      </p>
+
+      <h2>Agentic AI makes this even more urgent</h2>
+
+      <p>
+        There's a shift happening that most organizations haven't fully reckoned with yet. We're moving from AI as a tool — something you query and get an answer from — to AI as an agent. Systems that don't just recommend, but act. They call other services. They write back to databases. They chain decisions together. They operate across time, not just in a single moment.
+      </p>
+
+      <p>
+        When AI was just a recommendation engine, the human was always in the loop. When AI becomes agentic — when it starts taking actions, not just producing outputs — the human moves from being in the loop to being on call. You're not reviewing every decision anymore. You're monitoring a system and stepping in when something needs you.
+      </p>
+
+      <div class="callout">
+        <div class="callout-label">The shift nobody talks about</div>
+        <p>Classical automation is deterministic: stable inputs, predictable outputs, measurable ROI. Agentic AI is different. It makes judgment calls, combines context from multiple sources, and changes system states. The more autonomous it becomes, the more design — not engineering — determines whether humans can actually trust and control it.</p>
+      </div>
+
+      <p>
+        That changes everything about how we design these systems. You need to design for transparency: what did the agent do, and why? You need to design intervention points: when and how can a human step in? You need to design for trust calibration: how does the human know whether the system is operating as expected?
+      </p>
+
+      <p>
+        These aren't UX questions in the traditional sense. They're deeper than that. They're about decision architecture. And they require design thinking at every level — interaction design, system design, research.
+      </p>
+
+      <h2>So I'm building something</h2>
+
+      <p>
+        That's the thinking behind a new initiative I'm starting: a Community of Practice called <strong>Human Centered AI</strong>.
+      </p>
+
+      <p>
+        The idea is straightforward, even if the problem isn't: bring together people across design, delivery, and technology to understand what human-centered AI actually looks like in the context of financial services workflows. Build a shared vocabulary. Develop interaction patterns that can be reused. Create guidelines that help teams make better decisions about where humans need to be — and how to design for those moments.
+      </p>
+
+      <p>
+        The focus on financial services is deliberate — not just because Acuity has over 600 clients in that space, but because FSI workflows are where the human-AI handoff is most consequential. Insurance claims, fraud detection, credit approval, underwriting, KYC escalation, risk evaluation — in all of these, an AI system produces a recommendation that a human then has to act on under time pressure, with partial information, and often without a clear picture of how the AI arrived at its conclusion. That's exactly the design problem we're here to solve.
+      </p>
+
+      <div class="callout">
+        <div class="callout-label">Our working hypothesis</div>
+        <p>If Human-AI decision points are validated early — before deployment, not after — then adoption goes up, rework goes down, user trust increases, and operational risk decreases. That's what we intend to demonstrate with our first case study.</p>
+      </div>
+
+      <p>
+        We're starting with a focused case study in claims processing: observe a real AI-assisted workflow, map the decision points, understand what information users actually need at each one, and build something concrete and reusable from that experience. The roadmap runs across four quarters — from building the foundation and selecting the right use case, through execution and validation, to turning the findings into marketing collateral that tells this story to clients who are already deep in AI transformation and running into exactly these challenges.
+      </p>
+
+      <p>
+        I'm deliberately keeping it lightweight. The team is busy. Utilization is high. This isn't a research lab — it's a working community with a real deliverable. But that constraint is actually a feature, not a bug. It forces focus.
+      </p>
+
+      <h2>Why this matters to me personally</h2>
+
+      <p>
+        I've spent the last decade at the intersection of product, design, and business. I've been a Product Owner, an Agile Lead, a Business Development Manager. I've seen a lot of initiatives that were genuinely valuable get sidelined because they couldn't articulate their value in business terms. Design — especially at a company like Acuity, where the core offering is data and AI — risks exactly that fate if it doesn't find a new story to tell.
+      </p>
+
+      <p>
+        This community is part of that story. It's my attempt to help design find its footing in a world that has fundamentally shifted. Not by defending old territory, but by showing up in new places where the problems are harder, the stakes are higher, and the need for human-centered thinking is greater than ever.
+      </p>
+
+      <p>
+        Because the more autonomous these systems become, the more important it is that a human can look at them, understand what they're doing, and decide whether to trust them.
+      </p>
+
+      <p>
+        That moment — that interface between human judgment and machine intelligence — is where design lives now.
+      </p>
+
+      <div class="ornament">· · ·</div>
+
+      <p style="color: var(--muted); font-size: 0.95rem;">
+        <em>I'll be writing more about this as the Community of Practice develops — case study findings, interaction patterns, and what we learn along the way. If you're working on similar questions, I'd genuinely like to hear from you.</em>
+      </p>
+
+    </div>
+
+    <div class="article-tags">
+      <span class="tag">Design Leadership</span>
+      <span class="tag">AI</span>
+      <span class="tag">Community of Practice</span>
+      <span class="tag">Human-Centered AI</span>
+      <span class="tag">Financial Services</span>
+      <span class="tag">Agentic AI</span>
+    </div>
+
+    <a class="back-link" href="index.html">← Back to all writing</a>
+
+  </article>
+
+  <footer>
+    <div class="footer-name">Thomas Fink</div>
+    <div class="footer-copy">© 2026 · Graz, Austria · Design & Product Strategy</div>
+  </footer>
+
+</body>
+</html>
